@@ -1,0 +1,66 @@
+package edu.infosys.finCoreBankApplication.dao;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+
+import edu.infosys.finCoreBankApplication.bean.Account;
+
+@Repository
+@Service
+public class AccountDaoImpl implements AccountDao {
+	
+	@Autowired
+	private AccountRepository repository;
+
+	@Override
+	public void addAccount(Account account) {
+		repository.save(account);
+
+	}
+
+	@Override
+	public Account getAccountByAccountNumber(Long accountNumber) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Account> getAccounts() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteAccountByAccountNumber(Long accountNumber) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Long getMaxAccountNumber() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Account> getAccountsByCustomerId(Long customerId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Account> getAccountsByStatus(String status) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Account> getAccountsByAccountType(String accountType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

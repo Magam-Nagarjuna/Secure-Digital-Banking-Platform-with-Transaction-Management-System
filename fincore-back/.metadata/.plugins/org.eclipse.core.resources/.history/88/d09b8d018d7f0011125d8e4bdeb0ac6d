@@ -1,0 +1,6 @@
+package edu.infosys.finCoreBankApplication.dao;
+
+
+public interface AccountRepository {
+
+}

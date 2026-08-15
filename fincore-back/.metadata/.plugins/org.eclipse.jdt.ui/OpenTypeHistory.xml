@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<typeInfoHistroy>
+    <typeInfo handle="=finCoreBankApplication/C:\/Users\/Rajdeep Kala\/.m2\/repository\/org\/springframework\/data\/spring-data-jpa\/3.5.13\/spring-data-jpa-3.5.13.jar=/maven.pomderived=/true=/=/maven.groupId=/org.springframework.data=/=/maven.artifactId=/spring-data-jpa=/=/maven.version=/3.5.13=/=/maven.scope=/compile=/=/maven.pomderived=/true=/&lt;org.springframework.data.jpa.repository(JpaRepository.class[JpaRepository" modifiers="1537" timestamp="1783085067287"/>
+    <typeInfo handle="=finCoreBankApplication/C:\/Users\/Rajdeep Kala\/.m2\/repository\/org\/springframework\/data\/spring-data-commons\/3.5.13\/spring-data-commons-3.5.13.jar=/maven.pomderived=/true=/=/maven.groupId=/org.springframework.data=/=/maven.artifactId=/spring-data-commons=/=/maven.version=/3.5.13=/=/maven.scope=/compile=/=/maven.pomderived=/true=/&lt;org.springframework.data.util(CustomCollectionRegistrar.class[CustomCollectionRegistrar" modifiers="1537" timestamp="1783085066845"/>
+    <typeInfo handle="=finCoreBankApplication/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;edu.infosys.finCoreBankApplication.dao{CustomerDao.java[CustomerDao" modifiers="513" timestamp="1784036651277"/>
+    <typeInfo handle="=finCoreBankApplication/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;edu.infosys.finCoreBankApplication.dao{AccountDao.java[AccountDao" modifiers="513" timestamp="1784038699401"/>
+</typeInfoHistroy>

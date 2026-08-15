@@ -1,0 +1,25 @@
+# Frontend
+fincore-front/node_modules/
+fincore-front/dist/
+fincore-front/build/
+
+# Backend
+FinCoreBank/target/
+fincore-back/target/
+
+# Environment files
+.env
+*.env
+
+# IDE
+.classpath
+.project
+.settings/
+.idea/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

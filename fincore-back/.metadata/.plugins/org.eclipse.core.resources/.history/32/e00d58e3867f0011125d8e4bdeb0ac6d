@@ -1,0 +1,5 @@
+package edu.infosys.finCoreBankApplication.dao;
+
+public class CustomerRepository {
+
+}

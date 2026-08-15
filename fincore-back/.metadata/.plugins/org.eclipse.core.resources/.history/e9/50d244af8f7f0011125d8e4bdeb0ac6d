@@ -1,0 +1,57 @@
+package edu.infosys.finCoreBankApplication.dao;
+
+import java.util.List;
+
+import edu.infosys.finCoreBankApplication.bean.Account;
+
+public class AccountDaoImpl implements AccountDao {
+
+	@Override
+	public void addAccount(Account account) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Account getAccountByAccountNumber(Long accountNumber) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Account> getAccounts() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteAccountByAccountNumber(Long accountNumber) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Long getMaxAccountNumber() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Account> getAccountsByCustomerId(Long customerId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Account> getAccountsByStatus(String status) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Account> getAccountsByAccountType(String accountType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,14 @@
+package edu.infosys.finCoreBankApplication.dao;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import edu.infosys.finCoreBankApplication.bean.Customer;
+
+@Repository
+public interface CustomerRepository extends JpaRepository<Customer, Long>{
+	@Query("Select max(customerId) from Customer")
+	public Long getMaxCustomerId();
+
+}

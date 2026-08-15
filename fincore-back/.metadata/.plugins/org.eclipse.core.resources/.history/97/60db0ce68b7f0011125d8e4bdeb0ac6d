@@ -1,0 +1,45 @@
+package edu.infosys.finCoreBankApplication.dao;
+
+import java.util.List;
+
+import edu.infosys.finCoreBankApplication.bean.Customer;
+
+public class CustomerDaoImpl implements CustomerDao {
+
+	@Override
+	public void addCustomer(Customer customer) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Customer getCustomerById(Long customerId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Customer> getCustomers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteCustomerById(Long customerId) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Long getMaxCustomerId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Customer> getCustomerByStatus(String status) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
