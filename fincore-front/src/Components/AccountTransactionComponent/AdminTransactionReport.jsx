@@ -14,10 +14,10 @@ const AdminTransactionReport = () => {
     const [accounts, setAccounts] = useState([]);
     const [transactions, setTransactions] = useState([]);
 
-    // Empty string means ALL ACCOUNTS
+   
     const [selectedAccount, setSelectedAccount] = useState("");
 
-    // ALL = all transaction types
+    
     const [transactionType, setTransactionType] = useState("ALL");
 
     const [loadingAccounts, setLoadingAccounts] = useState(true);
@@ -34,8 +34,6 @@ const AdminTransactionReport = () => {
     useEffect(() => {
         loadAccounts();
     }, []);
-
-    // Load all account numbers, normalizing whatever shape the backend returns.
     const loadAccounts = async () => {
 
         try {
@@ -53,7 +51,6 @@ const AdminTransactionReport = () => {
             console.log("getAllAccountNumbers response:", response);
             console.log("getAllAccountNumbers data:", response?.data);
 
-            // Backend can return [8000001001, ...] OR [{ accountNumber: 8000001001 }, ...]
             let data = response?.data;
 
             if (!Array.isArray(data)) {
@@ -62,12 +59,10 @@ const AdminTransactionReport = () => {
 
             console.log("RAW ACCOUNT DATA:", data);
 
-            // Normalize account numbers
             const validAccounts = [];
 
             data.forEach((item) => {
 
-                // If backend returns plain number/string
                 if (typeof item === "number" || typeof item === "string") {
                     if (String(item).trim() !== "") {
                         validAccounts.push(String(item));
@@ -75,7 +70,6 @@ const AdminTransactionReport = () => {
                     return;
                 }
 
-                // If backend returns object
                 if (item && typeof item === "object") {
                     const number =
                         item.accountNumber ??
@@ -90,7 +84,6 @@ const AdminTransactionReport = () => {
                 }
             });
 
-            // Remove duplicates
             const uniqueAccountNumbers = [...new Set(validAccounts)];
 
             const normalizedAccounts = uniqueAccountNumbers.map((number) => ({
@@ -107,7 +100,6 @@ const AdminTransactionReport = () => {
                 return;
             }
 
-            // Automatically load transactions from ALL accounts.
             await loadAllTransactions(normalizedAccounts);
 
         } catch (error) {
@@ -133,7 +125,6 @@ const AdminTransactionReport = () => {
         }
     };
 
-    // Normalizes one account's transaction response into a flat array.
     const normalizeTransactionData = (data) => {
         if (Array.isArray(data)) {
             return data;
@@ -150,7 +141,6 @@ const AdminTransactionReport = () => {
         return [];
     };
 
-    // Load transactions from ALL accounts.
     const loadAllTransactions = async (accountList) => {
 
         try {
@@ -163,7 +153,6 @@ const AdminTransactionReport = () => {
             console.log("TOTAL ACCOUNTS:", accountList.length);
             console.log("====================================");
 
-            // Create one API request for each account.
             const transactionRequests = accountList.map(async (account) => {
 
                 const accountNumber = account.accountNumber;
@@ -178,7 +167,6 @@ const AdminTransactionReport = () => {
 
                     const data = normalizeTransactionData(response?.data);
 
-                    // Make sure every transaction contains account number.
                     return data.map((transaction) => ({
                         ...transaction,
                         accountNumber:
@@ -189,16 +177,13 @@ const AdminTransactionReport = () => {
                     }));
 
                 } catch (error) {
-                    // If one account has no transactions, don't stop the entire report.
                     console.warn(`No transactions found for account ${accountNumber}`, error);
                     return [];
                 }
             });
 
-            // Wait for ALL account requests.
             const results = await Promise.all(transactionRequests);
 
-            // Combine all transaction arrays.
             const allTransactions = results.flat();
 
             console.log("====================================");
@@ -221,7 +206,6 @@ const AdminTransactionReport = () => {
         }
     };
 
-    // Load transactions for one account.
     const loadTransactions = async (accountNumber) => {
 
         try {
@@ -240,7 +224,6 @@ const AdminTransactionReport = () => {
 
             const data = normalizeTransactionData(response?.data);
 
-            // Add account number if backend doesn't return it.
             const normalizedTransactions = data.map((transaction) => ({
                 ...transaction,
                 accountNumber:
@@ -280,13 +263,11 @@ const AdminTransactionReport = () => {
         setTransactionType("ALL");
         setErrorMessage("");
 
-        // Empty account = ALL ACCOUNTS
         if (!accountNumber) {
             await loadAllTransactions(accounts);
             return;
         }
 
-        // Specific account selected
         await loadTransactions(accountNumber);
     };
 
@@ -403,7 +384,6 @@ const AdminTransactionReport = () => {
         setTransactionType("ALL");
         setErrorMessage("");
 
-        // Reload ALL account transactions.
         if (accounts.length > 0) {
             await loadAllTransactions(accounts);
         }

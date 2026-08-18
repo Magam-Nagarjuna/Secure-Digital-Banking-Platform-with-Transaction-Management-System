@@ -1,14 +1,7 @@
 import React from "react";
 import buttonStyles from "../../styles/buttonStyles";
 
-/**
- * Shared button used across every page for submit/cancel/link
- * style actions. `variant` picks the style object, `fullWidth`
- * stretches it to 100%, and any extra `style` is merged last so
- * a page can still override a one-off value.
- *
- * variants: "primary" | "secondary" | "danger" | "link"
- */
+
 const AppButton = ({
     variant = "primary",
     fullWidth = false,

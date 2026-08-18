@@ -154,7 +154,7 @@ const CustomerMenu = () => {
                                     Loan List
                                 </NavDropdown.Item>
                                 <NavDropdown.Item onClick={() => goTo("/loan-applications")}>
-                                    My Loan Applications
+                                    My Loans
                                 </NavDropdown.Item>
                             </NavDropdown>
 

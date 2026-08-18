@@ -112,20 +112,59 @@ function App() {
                         TRANSACTIONS
                     ========================= */}
 
-                    {/* =========================
-                        LOANS
-                    ========================= */}
-                    <Route path="/loan-list" element={<LoanList />} />
-                    <Route path="/loan-add" element={<LoanEntry />} />
-                    <Route path="/loan-edit/:loanId" element={<LoanEntry />} />
-                    <Route path="/loan-apply/:loanId" element={<LoanApplication />} />
-                    <Route path="/loan-applications" element={<LoanApplications />} />
-                    <Route path="/loan-application-review" element={<LoanApplicationReview />} />
-                    <Route path="/loan-repayment/:applicationId" element={<LoanRepayment />} />
-
                     <Route
                         path="/transaction-entry/:tno"
                         element={<TransactionEntry />}
+                    />
+
+
+                    {/* =========================
+                        LOANS
+                    ========================= */}
+
+                    <Route
+                        path="/loan-list"
+                        element={<LoanList />}
+                    />
+
+                    <Route
+                        path="/loan-add"
+                        element={<LoanEntry />}
+                    />
+
+                    <Route
+                        path="/loan-edit/:loanId"
+                        element={<LoanEntry />}
+                    />
+
+                    {/* Customer applies for a loan */}
+                    <Route
+                        path="/loan-apply/:loanId"
+                        element={<LoanApplication />}
+                    />
+
+                    {/* Customer → My Loan Applications */}
+                    <Route
+                        path="/loan-applications"
+                        element={<LoanApplications />}
+                    />
+
+                    {/* Admin → Customer Loan Requests */}
+                    <Route
+                        path="/loan-application-review"
+                        element={<LoanApplicationReview />}
+                    />
+
+                    {/* Admin → Customer Loans */}
+                    <Route
+                        path="/customer-loans"
+                        element={<LoanApplications />}
+                    />
+
+                    {/* Customer → Loan Repayment */}
+                    <Route
+                        path="/loan-repayment/:applicationId"
+                        element={<LoanRepayment />}
                     />
 
 

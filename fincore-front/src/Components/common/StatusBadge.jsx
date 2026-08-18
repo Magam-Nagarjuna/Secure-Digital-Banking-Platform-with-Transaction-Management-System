@@ -1,13 +1,6 @@
 import React from "react";
 
-/**
- * Colored status pill. Relies on the "status status-success /
- * status-warning / status-danger" CSS classes already defined in
- * DisplayView.css so the look is unchanged; this component just
- * removes the duplicated dot + label markup from every page.
- *
- * variant: "success" | "warning" | "danger"
- */
+
 const StatusBadge = ({ variant = "success", label }) => {
 
     return (

@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAccountsByCustomerId } from "../../Services/AccountService";
+import { getAccounts, getAccountsByCustomerId } from "../../Services/AccountService";
 import { getCustomerByUsername } from "../../Services/CustomerService";
 import SearchBar from "../common/SearchBar";
 import { accountStyles as as_ } from "../../styles";
 import { formatAmount } from "../../utils/formatter";
+import { getRole } from "../../utils/storage";
 
 const STATUS_MAP = {
     A: { text: "Active", background: "#ECFDF3", color: "#16834B", border: "#BBE8CF" },
@@ -24,6 +25,8 @@ const STATUS_FILTERS = [
 
 const AccountList = () => {
 
+    const isAdmin = String(getRole() || "").toLowerCase().includes("admin");
+
     const [accounts, setAccounts] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [statusFilter, setStatusFilter] = useState("ALL");
@@ -33,9 +36,22 @@ const AccountList = () => {
 
     useEffect(() => {
         loadAccounts();
+        
     }, []);
 
     const loadAccounts = () => {
+        if (isAdmin) {
+            getAccounts()
+                .then((response) => {
+                    setAccounts(Array.isArray(response.data) ? response.data : []);
+                })
+                .catch((error) => {
+                    console.error("Account Loading Error:", error);
+                    setAccounts([]);
+                });
+            return;
+        }
+
         getCustomerByUsername()
             .then((res) => {
                 setCustomer(res.data);
@@ -57,7 +73,8 @@ const AccountList = () => {
             const matchesSearch =
                 !search ||
                 String(account.accountNumber || "").toLowerCase().includes(search) ||
-                String(account.accountType || "").toLowerCase().includes(search);
+                String(account.accountType || "").toLowerCase().includes(search) ||
+                String(account.customerId || "").toLowerCase().includes(search);
 
             const matchesStatus = statusFilter === "ALL" || account.status === statusFilter;
 
@@ -70,7 +87,7 @@ const AccountList = () => {
 
     const totalBalance = accounts.reduce((total, a) => total + Number(a.balance || 0), 0);
 
-    const returnBack = () => navigate("/customer-menu");
+    const returnBack = () => navigate(isAdmin ? "/admin-menu" : "/customer-menu");
 
     const customerName = customer?.customerName || customer?.username || "Customer";
     const customerInitial = customerName.charAt(0).toUpperCase();
@@ -84,20 +101,28 @@ const AccountList = () => {
                     <div style={as_.headerRow}>
 
                         <div>
-                            <div style={as_.eyebrow}>ACCOUNT MANAGEMENT</div>
-                            <h1 style={as_.title}>My Accounts</h1>
-                            <p style={as_.subtitle}>View and manage your FinCore bank accounts.</p>
+                            <div style={as_.eyebrow}>
+                                {isAdmin ? "ADMIN PORTAL • ACCOUNT MANAGEMENT" : "ACCOUNT MANAGEMENT"}
+                            </div>
+                            <h1 style={as_.title}>{isAdmin ? "All Accounts" : "My Accounts"}</h1>
+                            <p style={as_.subtitle}>
+                                {isAdmin
+                                    ? "View accounts across every FinCore customer."
+                                    : "View and manage your FinCore bank accounts."}
+                            </p>
                         </div>
 
-                        <div style={as_.customerPill}>
-                            <div style={as_.customerAvatar}>{customerInitial}</div>
-                            <div>
-                                <div style={as_.customerName}>{customerName}</div>
-                                <div style={as_.customerId}>
-                                    Customer ID: {customer?.customerId || "—"}
+                        {!isAdmin && (
+                            <div style={as_.customerPill}>
+                                <div style={as_.customerAvatar}>{customerInitial}</div>
+                                <div>
+                                    <div style={as_.customerName}>{customerName}</div>
+                                    <div style={as_.customerId}>
+                                        Customer ID: {customer?.customerId || "—"}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        )}
 
                     </div>
                 </div>
@@ -167,7 +192,11 @@ const AccountList = () => {
                             <SearchBar
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                placeholder="Search account number or type..."
+                                placeholder={
+                                    isAdmin
+                                        ? "Search account number, customer ID or type..."
+                                        : "Search account number or type..."
+                                }
                             />
                         </div>
 
@@ -190,6 +219,7 @@ const AccountList = () => {
                             <thead>
                                 <tr style={{ background: "#f8fafc" }}>
                                     <th style={as_.th}>Account</th>
+                                    {isAdmin && <th style={as_.th}>Customer ID</th>}
                                     <th style={as_.th}>Account Type</th>
                                     <th style={as_.th}>Available Balance</th>
                                     <th style={{ ...as_.th, textAlign: "center" }}>Status</th>
@@ -215,6 +245,12 @@ const AccountList = () => {
                                                         </div>
                                                     </div>
                                                 </td>
+
+                                                {isAdmin && (
+                                                    <td style={as_.td}>
+                                                        {account.customerId}
+                                                    </td>
+                                                )}
 
                                                 <td style={as_.td}>
                                                     <span style={as_.typePill}>{account.accountType}</span>
@@ -249,7 +285,7 @@ const AccountList = () => {
                                     })
                                 ) : (
                                     <tr>
-                                        <td colSpan="5" style={{ padding: "65px 20px", textAlign: "center" }}>
+                                        <td colSpan={isAdmin ? "6" : "5"} style={{ padding: "65px 20px", textAlign: "center" }}>
                                             <div style={{ width: "58px", height: "58px", margin: "0 auto 15px", borderRadius: "16px", background: "#f1f5f9", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "25px" }}>
                                                 🏦
                                             </div>

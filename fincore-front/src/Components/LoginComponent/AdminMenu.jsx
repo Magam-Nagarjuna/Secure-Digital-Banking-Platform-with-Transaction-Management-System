@@ -37,6 +37,15 @@ const QUICK_ACCESS_CARDS = [
     },
     {
         number: "04",
+        iconBg: "#F0FDF4",
+        iconColor: "#16A34A",
+        title: "All Accounts",
+        description: "View accounts across every customer.",
+        linkLabel: "Open →",
+        path: "/account-list",
+    },
+    {
+        number: "05",
         iconBg: "#EFF6FF",
         iconColor: "#1D4ED8",
         title: "Transaction Reports",
@@ -67,7 +76,6 @@ const AdminMenu = () => {
     return (
         <div style={layoutStyles.dashboardShell}>
 
-            {/* HEADER */}
             <div style={layoutStyles.dashboardHeader}>
                 <Container>
                     <div style={layoutStyles.dashboardHeaderRow}>
@@ -96,7 +104,6 @@ const AdminMenu = () => {
                 </Container>
             </div>
 
-            {/* NAVIGATION */}
             <Navbar expand="lg" style={layoutStyles.navBar}>
                 <Container>
 
@@ -134,12 +141,6 @@ const AdminMenu = () => {
                                 >
                                     Pending Customer List
                                 </NavDropdown.Item>
-
-                                <NavDropdown.Divider />
-
-                                <NavDropdown.Item>
-                                    Customer Account Report
-                                </NavDropdown.Item>
                             </NavDropdown>
 
                             {/* ACCOUNT */}
@@ -147,12 +148,17 @@ const AdminMenu = () => {
                                 title="Account"
                                 id="account-dropdown"
                             >
-                               
 
                                 <NavDropdown.Item
                                     onClick={() => goTo("/account-add")}
                                 >
                                     Account Addition
+                                </NavDropdown.Item>
+
+                                <NavDropdown.Item
+                                    onClick={() => goTo("/account-list")}
+                                >
+                                    All Accounts
                                 </NavDropdown.Item>
 
                                 <NavDropdown.Divider />
@@ -190,7 +196,15 @@ const AdminMenu = () => {
                                         goTo("/loan-application-review")
                                     }
                                 >
-                                    Customer Loan Applications
+                                    Customer Loan Requests
+                                </NavDropdown.Item>
+
+                                <NavDropdown.Item
+                                    onClick={() =>
+                                        goTo("/customer-loans")
+                                    }
+                                >
+                                    Customer Loans
                                 </NavDropdown.Item>
                             </NavDropdown>
 
@@ -209,7 +223,7 @@ const AdminMenu = () => {
                 </Container>
             </Navbar>
 
-            {/* ADMIN LANDING */}
+           
             <main style={layoutStyles.dashboardMain}>
 
                 <div style={dashboardStyles.pageIntro}>
@@ -254,7 +268,7 @@ const AdminMenu = () => {
                     </div>
                 </section>
 
-                {/* BANKING SERVICES */}
+                
                 <section style={dashboardStyles.section}>
 
                     <h2 style={commonStyles.sectionTitle}>
@@ -268,7 +282,7 @@ const AdminMenu = () => {
                             style={dashboardStyles.serviceCard}
                             iconClassName="quick-icon"
                             linkClassName="quick-link"
-                            number="05"
+                            number="06"
                             title="Loan List"
                             description="View and manage available loan schemes."
                             linkLabel="View loans →"
@@ -280,12 +294,12 @@ const AdminMenu = () => {
                             style={dashboardStyles.serviceCard}
                             iconClassName="quick-icon"
                             linkClassName="quick-link"
-                            number="06"
+                            number="07"
                             title="Customer Loans"
-                            description="Review customer loan applications and repayment status."
+                            description="View all customer loans and repayment status."
                             linkLabel="Review loans →"
                             onClick={() =>
-                                goTo("/loan-application-review")
+                                goTo("/customer-loans")
                             }
                         />
 

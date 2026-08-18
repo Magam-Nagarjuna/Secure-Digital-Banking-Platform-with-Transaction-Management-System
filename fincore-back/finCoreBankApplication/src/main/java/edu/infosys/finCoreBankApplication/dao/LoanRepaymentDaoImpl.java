@@ -27,11 +27,6 @@ public class LoanRepaymentDaoImpl implements LoanRepaymentDao {
     }
 
     @Override
-    public List<LoanRepayment> findByAccountNumber(Long accountNumber) {
-        return repository.findByAccountNumberOrderByPaymentDateDesc(accountNumber);
-    }
-
-    @Override
     public String getMaxRepaymentId() {
         return repository.getMaxRepaymentId();
     }

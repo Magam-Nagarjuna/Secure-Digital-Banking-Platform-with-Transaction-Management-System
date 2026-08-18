@@ -10,7 +10,6 @@ public class LoanRepayment {
     private String repaymentId;
     private String applicationId;
     private Long customerId;
-    private Long accountNumber;
     private Double paymentAmount;
     private String paymentDate;
     private String paymentMode;
@@ -41,14 +40,6 @@ public class LoanRepayment {
 
     public void setCustomerId(Long customerId) {
         this.customerId = customerId;
-    }
-
-    public Long getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(Long accountNumber) {
-        this.accountNumber = accountNumber;
     }
 
     public Double getPaymentAmount() {

@@ -1,11 +1,7 @@
 import React from "react";
 import formStyles from "../../styles/formStyles";
 
-/**
- * Label + select + inline error message. Mirrors AppInput so
- * dropdown fields (status, account type, etc.) look identical
- * to text fields.
- */
+
 const AppSelect = ({
     label,
     name,

@@ -71,7 +71,7 @@ const LoanList = () => {
 
     useEffect(() => {
         loadLoans();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+       
     }, []);
 
     const handleDelete = (loanId) => setDeleteTarget(loanId);
@@ -107,7 +107,7 @@ const LoanList = () => {
     return (
         <div style={loanStyles.page}>
 
-            {/* Header */}
+            
             <div
                 style={{
                     background: "#FFFFFF",
@@ -181,7 +181,7 @@ const LoanList = () => {
                     </button>
                 </div>
 
-                {/* Page heading */}
+                
                 <div style={loanStyles.header}>
                     <div>
                         <div
@@ -228,7 +228,6 @@ const LoanList = () => {
                     </div>
                 </div>
 
-                {/* Error */}
                 {error && (
                     <div
                         style={{
@@ -242,7 +241,7 @@ const LoanList = () => {
                     </div>
                 )}
 
-                {/* Admin metrics */}
+             
                 {isAdmin && (
                     <div style={loanStyles.metricGrid}>
                         <div style={loanStyles.metric}>
@@ -274,14 +273,14 @@ const LoanList = () => {
                     </div>
                 )}
 
-                {/* Loading */}
+                
                 {loading && (
                     <div style={loanStyles.card}>
                         Loading loan schemes...
                     </div>
                 )}
 
-                {/* Empty */}
+               
                 {!loading && loans.length === 0 && (
                     <div style={loanStyles.card}>
                         <div
@@ -308,7 +307,7 @@ const LoanList = () => {
                     </div>
                 )}
 
-                {/* Loan cards */}
+                
                 {!loading && loans.length > 0 && (
                     <div style={loanStyles.grid}>
                         {loans.map((loan) => {

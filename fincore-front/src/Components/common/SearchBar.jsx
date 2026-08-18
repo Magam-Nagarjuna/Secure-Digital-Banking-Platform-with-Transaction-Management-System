@@ -1,11 +1,7 @@
 import React from "react";
 import colors from "../../styles/colors";
 
-/**
- * Search box with a leading magnifier glyph, used on every
- * list/report page (AccountList, CustomerReport, PendingCustomerList,
- * TransactionReport, AdminTransactionReport...).
- */
+
 const SearchBar = ({
     value,
     onChange,

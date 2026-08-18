@@ -174,7 +174,6 @@ const loginStyles = {
         fontSize: "11px",
     },
 
-    // ---- RegisterUser specific ----
     registerHeaderRow: {
         display: "flex",
         alignItems: "center",

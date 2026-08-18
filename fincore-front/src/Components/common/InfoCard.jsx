@@ -1,12 +1,7 @@
 import React from "react";
 import colors from "../../styles/colors";
 
-/**
- * Small stat card: eyebrow label, large value, icon chip.
- * Used for the "TOTAL CUSTOMERS / APPROVED / PENDING" style
- * summary rows on CustomerReport, AccountList, TransactionReport,
- * AdminTransactionReport, etc.
- */
+
 const InfoCard = ({ label, value, icon, iconBg, iconColor, style = {} }) => {
 
     return (

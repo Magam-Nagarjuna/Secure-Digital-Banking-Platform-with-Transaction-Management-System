@@ -1,12 +1,7 @@
 import React from "react";
 import colors from "../../styles/colors";
 
-/**
- * Header block used at the top of report/entry cards: a "Return
- * Back" link on its own row (so it never overlaps the title),
- * followed by a title + subtitle. Used by CustomerReport,
- * PendingCustomerList, AccountList, TransactionReport, etc.
- */
+
 const PageHeader = ({
     onBack,
     backLabel = "Return Back",

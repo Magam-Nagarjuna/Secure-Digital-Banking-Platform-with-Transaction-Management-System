@@ -1,18 +1,6 @@
 import React from "react";
 import modalStyles from "../../styles/modalStyles";
 
-/**
- * Yes/No confirmation popup, styled with the same "modal-*"
- * classes as <Modal /> so it matches the app's existing dialog
- * look. Used wherever a page needs to confirm a destructive or
- * irreversible action before calling its handler.
- *
- * Optional text-input mode (showInput) turns this into a themed
- * replacement for window.prompt(): pass inputValue/onInputChange
- * to control the text, and read the value from your own state
- * inside onConfirm. Existing yes/no callers are unaffected since
- * showInput defaults to false.
- */
 const ConfirmDialog = ({
     open,
     title = "Please Confirm",

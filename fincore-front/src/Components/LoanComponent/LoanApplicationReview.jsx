@@ -22,6 +22,22 @@ const field = (label, value) => (
     </div>
 );
 
+
+const pillStyle = status =>
+    status === "APPROVED"
+        ? { background: "#ECFDF5", color: "#047857" }
+        : status === "PENDING"
+            ? { background: "#FFF7ED", color: "#C2410C" }
+            : status === "REJECTED"
+                ? { background: "#FEF2F2", color: "#B91C1C" }
+                : { background: "#F1F5F9", color: "#475569" };
+const section = (label, rows) => (
+    <div style={loanStyles.detailView.section} key={label}>
+        <div style={loanStyles.detailView.sectionLabel}>{label}</div>
+        <div style={loanStyles.detailView.detailsBox}>{rows}</div>
+    </div>
+);
+
 const LoanApplicationReview = () => {
     const navigate = useNavigate();
 
@@ -185,7 +201,7 @@ const LoanApplicationReview = () => {
                     </div>
                 )}
 
-                {/* STATUS FILTER */}
+                
                 <div
                     style={{
                         ...loanStyles.card,
@@ -218,7 +234,7 @@ const LoanApplicationReview = () => {
                     </div>
                 </div>
 
-                {/* APPLICATION LIST */}
+                
                 <div style={loanStyles.card}>
 
                     {loading ? (
@@ -287,8 +303,18 @@ const LoanApplicationReview = () => {
                                             </td>
 
                                             <td style={loanStyles.td}>
-                                                {application.applicationStatus ||
-                                                    status}
+                                                <span
+                                                    style={{
+                                                        ...loanStyles.status,
+                                                        ...pillStyle(
+                                                            application.applicationStatus ||
+                                                            status
+                                                        )
+                                                    }}
+                                                >
+                                                    {application.applicationStatus ||
+                                                        status}
+                                                </span>
                                             </td>
 
                                             <td style={loanStyles.td}>
@@ -314,7 +340,7 @@ const LoanApplicationReview = () => {
                 </div>
             </Container>
 
-            {/* COMPLETE LOAN REQUEST MODAL */}
+            
             {selected && (
                 <div style={loanStyles.modalOverlay}>
                     <div style={loanStyles.detailView.detailsModal}>
@@ -338,108 +364,99 @@ const LoanApplicationReview = () => {
                             </button>
                         </div>
 
-                        <div style={loanStyles.detailView.detailsBox}>
-
-                            {field(
+                        {section("Customer Information", [
+                            field(
                                 "Customer Loan Id",
                                 selected.applicationId
-                            )}
-
-                            {field(
+                            ),
+                            field(
                                 "Customer Id",
                                 selected.customerId
-                            )}
+                            )
+                        ])}
 
-                            {field(
+                        {section("Loan Information", [
+                            field(
                                 "Loan Id",
                                 selected.loanId
-                            )}
-
-                            {field(
+                            ),
+                            field(
                                 "Interest Rate",
                                 selected.interestRate
                                     ? `${selected.interestRate}%`
                                     : "—"
-                            )}
-
-                            {field(
+                            ),
+                            field(
                                 "Loan Amount",
                                 money(selected.loanAmount)
-                            )}
-
-                            {field(
-                                "Total Interest Need to Pay",
-                                money(selected.totalInterestPayable)
-                            )}
-
-                            {field(
-                                "EMI",
-                                money(selected.emiPayable)
-                            )}
-
-                            {field(
+                            ),
+                            field(
                                 "Total Tenures",
                                 selected.totalTenure
-                            )}
+                            ),
+                            field(
+                                "EMI",
+                                money(selected.emiPayable)
+                            ),
+                            field(
+                                "Total Interest",
+                                money(selected.totalInterestPayable)
+                            ),
+                            field(
+                                "Total Cost",
+                                money(selected.totalCost)
+                            )
+                        ])}
 
-                            {field(
-                                "Already Paid Tenures",
-                                selected.paidTenure || 0
-                            )}
-
-                            {field(
+                        {section("Payment Information", [
+                            field(
                                 "Amount Paid Till Date",
                                 money(
                                     selected.paidAmount ??
                                     selected.amountPaidTillDate
                                 )
-                            )}
-
-                            {field(
-                                "Total Amount Need to Pay",
-                                money(
-                                    selected.totalCost
-                                )
-                            )}
-
-                            {field(
+                            ),
+                            field(
+                                "Already Paid Tenures",
+                                selected.paidTenure || 0
+                            ),
+                            field(
                                 "Saving Account",
                                 selected.savingsAccountNumber
-                            )}
-
-                            {field(
+                            ),
+                            field(
                                 "Loan Payment Account",
                                 selected.paymentAccountNumber ||
                                 "Created on approval"
-                            )}
+                            )
+                        ])}
 
-                            {field(
+                        {section("Application Information", [
+                            field(
                                 "Loan Date",
                                 selected.loanDate ||
                                 selected.applicationDate
-                            )}
-
-                            {field(
+                            ),
+                            field(
+                                "Closed Date",
+                                selected.closedDate || "—"
+                            ),
+                            field(
                                 "Loan Status",
                                 selected.applicationStatus ||
                                 selected.status
-                            )}
+                            ),
+                            ...(selected.rejectionReason
+                                ? [
+                                    field(
+                                        "Rejection Reason",
+                                        selected.rejectionReason
+                                    )
+                                ]
+                                : [])
+                        ])}
 
-                            {field(
-                                "Payment Complete Date",
-                                selected.completeDate ||
-                                "—"
-                            )}
-
-                            {selected.rejectionReason &&
-                                field(
-                                    "Rejection Reason",
-                                    selected.rejectionReason
-                                )}
-
-                        </div>
-
-                        {/* ACTIONS */}
+                       
                         <div style={loanStyles.detailView.actions}>
 
                             <button
@@ -475,30 +492,19 @@ const LoanApplicationReview = () => {
                                 </>
                             )}
 
-                            {status === "APPROVED" && (
-                                <button
-                                    style={loanStyles.primaryButton}
-                                    onClick={() =>
-                                        navigate(
-                                            `/loan-repayment/${selected.applicationId}`
-                                        )
-                                    }
-                                >
-                                    Repayment
-                                </button>
-                            )}
-
                         </div>
                     </div>
                 </div>
             )}
 
-            {/* APPROVAL CONFIRMATION */}
+           
             {approveId && (
                 <div style={loanStyles.modalOverlay}>
                     <div style={loanStyles.confirmModal}>
 
-                        <div style={loanStyles.detailView.icon}>✓</div>
+                        <div style={loanStyles.detailView.icon}>
+                            ✓
+                        </div>
 
                         <h3 style={loanStyles.modalTitle}>
                             Approve Loan Application?
@@ -535,12 +541,18 @@ const LoanApplicationReview = () => {
                 </div>
             )}
 
-            {/* REJECTION REASON */}
+           
             {rejectId && (
                 <div style={loanStyles.modalOverlay}>
                     <div style={loanStyles.confirmModal}>
 
-                        <div style={{ ...loanStyles.detailView.icon, background: "#FEF2F2", color: "#B91C1C" }}>
+                        <div
+                            style={{
+                                ...loanStyles.detailView.icon,
+                                background: "#FEF2F2",
+                                color: "#B91C1C"
+                            }}
+                        >
                             ✕
                         </div>
 
@@ -555,7 +567,9 @@ const LoanApplicationReview = () => {
 
                         <textarea
                             value={rejectReason}
-                            onChange={e => setRejectReason(e.target.value)}
+                            onChange={e =>
+                                setRejectReason(e.target.value)
+                            }
                             rows={3}
                             style={loanStyles.detailView.textarea}
                             placeholder="Enter rejection reason"

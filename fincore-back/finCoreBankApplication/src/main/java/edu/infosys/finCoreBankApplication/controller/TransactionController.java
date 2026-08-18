@@ -38,15 +38,18 @@ public class TransactionController {
         if (amount <= 0)
             return 1;
 
+      
+        if (!"Savings".equalsIgnoreCase(account.getAccountType()))
+            return 1;
+
         if ("Withdraw".equalsIgnoreCase(transaction.getTransactionType())) {
             double balance = account.getBalance() == null ? 0.0 : account.getBalance();
 
-            // LOAN accounts are normal transactional accounts and do not have the
-            // normal savings/current ₹5,000 minimum-balance restriction.
-            if ("LOAN".equalsIgnoreCase(account.getAccountType())) {
-                if (balance < amount)
-                    return 1;
-            } else if (balance - amount < 5000) {
+           
+            if (balance <= 5000) {
+                return 1;
+            }
+            if (amount > balance) {
                 return 1;
             }
         }

@@ -1,11 +1,7 @@
 import React from "react";
 import commonStyles from "../../styles/commonStyles";
 
-/**
- * Numbered "quick access" card used on AdminMenu / CustomerMenu
- * dashboards (e.g. "01 Customer List", "02 Pending Customers"...).
- * Also usable as a generic bordered card when `number` is omitted.
- */
+
 const AppCard = ({
     number,
     iconBg,

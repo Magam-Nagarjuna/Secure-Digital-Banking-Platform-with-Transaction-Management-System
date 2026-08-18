@@ -40,7 +40,6 @@ export const getAllAccountNumbers = () => {
         let data = response?.data;
 
         if (Array.isArray(data)) {
-            // API already returned the account list.
         }
         else if (data && Array.isArray(data.content)) {
             data = data.content;

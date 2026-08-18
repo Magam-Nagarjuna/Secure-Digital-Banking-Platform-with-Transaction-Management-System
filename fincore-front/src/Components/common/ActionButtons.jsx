@@ -24,13 +24,6 @@ const VARIANTS = {
     },
 };
 
-/**
- * Row of small pill-shaped action buttons used inside table
- * rows (Accept/Reject, View/Edit, etc.). Each action can either
- * navigate via a route (`to`) or run a handler (`onClick`).
- *
- * actions: [{ key, label, variant, to, onClick }]
- */
 const ActionButtons = ({ actions = [] }) => {
 
     return (

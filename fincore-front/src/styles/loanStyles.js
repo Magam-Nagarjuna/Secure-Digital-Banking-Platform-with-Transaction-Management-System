@@ -6,7 +6,7 @@ const loanStyles = {
     page: {
         minHeight: "100vh",
         background: colors.pageBackground || "#F8FAFC",
-        padding: "38px 0 60px",
+        padding: "28px 0 60px",
     },
 
     main: {
@@ -51,7 +51,7 @@ const loanStyles = {
         margin: 0,
         color: colors.textInk || "#111827",
         fontSize: "32px",
-        fontWeight: 750,
+        fontWeight: 800,
     },
 
     subtitle: {
@@ -70,8 +70,8 @@ const loanStyles = {
 
     metricGrid: {
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))",
-        gap: "16px",
+        gridTemplateColumns: "repeat(5,minmax(0,1fr))",
+        gap: "14px",
         marginBottom: "22px",
     },
 
@@ -295,6 +295,29 @@ const loanStyles = {
         marginTop: "5px",
     },
 
+    heroCard: {
+        background: "linear-gradient(135deg,#0862bd,#176fca)",
+        borderRadius: "16px",
+        padding: "26px 24px",
+        marginBottom: "18px",
+        color: "#FFFFFF",
+        boxShadow: "0 10px 24px rgba(10,96,190,.20)",
+    },
+
+    heroLabel: {
+        fontSize: "12px",
+        fontWeight: 700,
+        letterSpacing: ".06em",
+        textTransform: "uppercase",
+        opacity: 0.85,
+    },
+
+    heroValue: {
+        fontSize: "36px",
+        fontWeight: 800,
+        marginTop: "8px",
+    },
+
     modalOverlay: {
         position: "fixed",
         inset: 0,
@@ -336,12 +359,7 @@ const loanStyles = {
         gap: "10px",
     },
 
-    // Shared "read-only detail report" modal styles — used by both the
-    // admin Loan Application Review screen and the customer Loan
-    // Application Report screen. Namespaced under detailView (rather than
-    // flattened into the top-level object) so keys like "label" and
-    // "value" here don't collide with the existing form-field
-    // loanStyles.label used elsewhere in the module.
+   
     detailView: {
         detailsModal: {
             width: "min(760px, 94vw)",
@@ -384,6 +402,22 @@ const loanStyles = {
             borderRadius: "12px",
             overflow: "hidden",
             background: "#FFFFFF",
+        },
+
+      
+        section: {
+            marginBottom: "18px",
+        },
+
+        sectionLabel: {
+            padding: "10px 14px",
+            background: "#F8FAFC",
+            borderBottom: "1px solid #E2E8F0",
+            color: "#64748B",
+            fontSize: "11px",
+            fontWeight: 800,
+            textTransform: "uppercase",
+            letterSpacing: ".06em",
         },
 
         row: {

@@ -2,16 +2,7 @@ import React from "react";
 import tableStyles from "../../styles/tableStyles";
 import EmptyState from "./EmptyState";
 
-/**
- * Generic table shell: renders the "fin-table" wrapper, header
- * row from `columns`, and one <tr> per row via `renderRow`. Falls
- * back to <EmptyState /> when `rows` is empty. This keeps the
- * table scaffolding (overflow wrapper, min-width, thead) out of
- * every report/list page.
- *
- * columns: [{ key, label }]
- * renderRow: (row, index) => <tr>...</tr>
- */
+
 const DataTable = ({
     columns = [],
     rows = [],

@@ -4,7 +4,7 @@ import {
   generateTransactionId,
   addTransaction,
 } from "../../Services/TransactionService";
-import { getAccountIdsByCustomerId } from "../../Services/AccountService";
+import { getAccountsByCustomerId } from "../../Services/AccountService";
 import { getCustomerByUsername } from "../../Services/CustomerService";
 import "../../DisplayView.css";
 import logo from "../../assets/logo.png";
@@ -51,10 +51,14 @@ const TransactionEntry = () => {
     getCustomerByUsername()
       .then((res) => {
         setCustomer(res.data);
-        return getAccountIdsByCustomerId();
+        return getAccountsByCustomerId(res.data.customerId);
       })
       .then((res) => {
-        setIdList(Array.isArray(res.data) ? res.data : []);
+        const accounts = Array.isArray(res.data) ? res.data : [];
+        const savingsAccountNumbers = accounts
+          .filter((a) => (a.accountType || "").toLowerCase() === "savings")
+          .map((a) => a.accountNumber);
+        setIdList(savingsAccountNumbers);
       })
       .catch((err) => {
         console.error("Customer / Account loading error:", err);
@@ -270,7 +274,7 @@ const TransactionEntry = () => {
                   <p>
                     {isDeposit
                       ? "Unable to complete the deposit. Please try again."
-                      : "Insufficient balance. For normal accounts, the applicable minimum-balance rule is enforced. Loan accounts do not require the ₹5,000 minimum balance."}
+                      : "Withdrawal not allowed. Your account balance must be above ₹5,000 to withdraw, and you cannot withdraw more than your available balance."}
                   </p>
                 </div>
               </div>
@@ -292,8 +296,8 @@ const TransactionEntry = () => {
                     {loading
                       ? "Loading accounts..."
                       : idList.length === 0
-                        ? "No accounts available"
-                        : "Select account"}
+                        ? "No savings account available"
+                        : "Select savings account"}
                   </option>
                   {idList.map((accountNo) => (
                     <option key={accountNo} value={accountNo}>
@@ -306,7 +310,14 @@ const TransactionEntry = () => {
                 )}
                 {!errors.accountNumber && idList.length > 0 && (
                   <span className="field-help">
-                    Choose the account for this transaction.
+                    Only Savings accounts can be used for deposits and
+                    withdrawals.
+                  </span>
+                )}
+                {!errors.accountNumber && !loading && idList.length === 0 && (
+                  <span className="field-help">
+                    You need an active Savings account to make deposits or
+                    withdrawals.
                   </span>
                 )}
               </div>

@@ -1,10 +1,7 @@
 import React from "react";
 import commonStyles from "../../styles/commonStyles";
 
-/**
- * Section heading + subtitle used above dashboard card grids
- * ("Quick access", "Banking services"...).
- */
+
 const SectionTitle = ({ title, subtitle, style = {} }) => {
 
     return (

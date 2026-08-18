@@ -1,11 +1,7 @@
 import React from "react";
 import formStyles from "../../styles/formStyles";
 
-/**
- * Label + input + inline error message, matching the markup that
- * was repeated in every form across the app (login, register,
- * customer entry/edit, account entry, transaction entry).
- */
+
 const AppInput = ({
     label,
     name,

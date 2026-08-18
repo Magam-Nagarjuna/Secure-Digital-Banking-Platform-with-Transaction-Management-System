@@ -26,6 +26,8 @@ public class LoanApplication {
     private String applicationDate;
     private String reviewedDate;
     private String rejectionReason;
+    private Integer paidTenure;
+    private String closedDate;
 
     public LoanApplication() {
     }
@@ -80,12 +82,10 @@ public class LoanApplication {
 
     public Double getLoanAmount() {
         return loanAmount;
-
     }
 
     public void setLoanAmount(Double loanAmount) {
         this.loanAmount = loanAmount;
-
     }
 
     public Integer getLoanTenure() {
@@ -182,5 +182,21 @@ public class LoanApplication {
 
     public void setRejectionReason(String rejectionReason) {
         this.rejectionReason = rejectionReason;
+    }
+
+    public Integer getPaidTenure() {
+        return paidTenure;
+    }
+
+    public void setPaidTenure(Integer paidTenure) {
+        this.paidTenure = paidTenure;
+    }
+
+    public String getClosedDate() {
+        return closedDate;
+    }
+
+    public void setClosedDate(String closedDate) {
+        this.closedDate = closedDate;
     }
 }

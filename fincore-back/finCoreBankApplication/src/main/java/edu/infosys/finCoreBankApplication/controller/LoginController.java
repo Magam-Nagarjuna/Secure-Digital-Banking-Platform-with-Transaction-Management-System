@@ -76,14 +76,14 @@ public class LoginController {
 	 
 	 @PostMapping("/logout")
 	 public ResponseEntity<String> logout(HttpServletRequest request,HttpServletResponse response) {
-	        // Clear Spring Security Context
+	      
 	        SecurityContextHolder.clearContext();
-	        // Invalidate session
+	    
 	        HttpSession session = request.getSession(false);
 	        if (session != null) {
 	            session.invalidate();
 	        }
-	        // Delete cookie
+	    
 	        Cookie cookie = new Cookie("JSESSIONID", null);
 	        cookie.setPath("/");
 	        cookie.setMaxAge(0);

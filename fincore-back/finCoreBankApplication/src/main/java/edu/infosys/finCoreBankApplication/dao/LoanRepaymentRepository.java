@@ -1,8 +1,10 @@
 package edu.infosys.finCoreBankApplication.dao;
 
 import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
 import edu.infosys.finCoreBankApplication.bean.LoanRepayment;
 
 public interface LoanRepaymentRepository extends JpaRepository<LoanRepayment, String> {
@@ -13,6 +15,4 @@ public interface LoanRepaymentRepository extends JpaRepository<LoanRepayment, St
     List<LoanRepayment> findByApplicationIdOrderByPaymentDateDesc(String applicationId);
 
     List<LoanRepayment> findByCustomerIdOrderByPaymentDateDesc(Long customerId);
-
-    List<LoanRepayment> findByAccountNumberOrderByPaymentDateDesc(Long accountNumber);
 }

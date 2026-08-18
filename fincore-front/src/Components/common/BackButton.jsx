@@ -2,11 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../DisplayView.css';
 
-/**
- * "Return Back" button, pinned to the top-left corner of its
- * parent card. Parent must have className "fin-card" or "login-card"
- * (both already have position:relative in DisplayView.css).
- */
+
 const BackButton = ({ onClick, label = 'Return Back' }) => {
     const navigate = useNavigate();
     const handleBack = onClick || (() => navigate(-1));

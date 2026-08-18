@@ -1,11 +1,6 @@
 import React from "react";
 
-/**
- * "No data" placeholder used inside table bodies (colSpan row)
- * or standalone. Matches the empty-state markup that was
- * duplicated in AccountList, CustomerReport, PendingCustomerList,
- * TransactionReport and AdminTransactionReport.
- */
+
 const EmptyState = ({
     icon = "🗂️",
     title = "No records found",

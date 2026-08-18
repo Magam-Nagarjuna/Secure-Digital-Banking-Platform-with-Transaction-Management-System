@@ -75,11 +75,6 @@ public class LoanApplicationController {
         return service.getRepaymentsByCustomer(customerId);
     }
 
-    @GetMapping("/loan-repayments/account/{accountNumber}")
-    public List<LoanRepayment> getRepaymentsByAccount(@PathVariable Long accountNumber) {
-        return service.getRepaymentsByAccount(accountNumber);
-    }
-
     @GetMapping("/loan-application-id")
     public String generateApplicationId() {
         return service.generateApplicationId();

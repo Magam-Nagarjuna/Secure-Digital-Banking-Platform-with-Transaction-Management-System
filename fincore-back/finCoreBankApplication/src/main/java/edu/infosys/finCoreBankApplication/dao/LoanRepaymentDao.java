@@ -11,7 +11,5 @@ public interface LoanRepaymentDao {
 
     List<LoanRepayment> findByCustomerId(Long customerId);
 
-    List<LoanRepayment> findByAccountNumber(Long accountNumber);
-
     String getMaxRepaymentId();
 }
