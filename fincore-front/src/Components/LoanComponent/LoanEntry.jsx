@@ -295,6 +295,7 @@ const LoanEntry = () => {
                                 gap: "20px"
                             }}
                         >
+
                             <div style={loanStyles.field}>
                                 <label style={loanStyles.label}>
                                     Loan ID
@@ -338,7 +339,8 @@ const LoanEntry = () => {
                                 <input
                                     style={loanStyles.input}
                                     type="number"
-                                    min="1"
+                                    min="0.5"
+                                    step="0.5"
                                     value={form.loanTenure}
                                     onChange={(e) =>
                                         update(
@@ -390,6 +392,7 @@ const LoanEntry = () => {
                                     <option value="I">Inactive</option>
                                 </select>
                             </div>
+
                         </div>
 
                         {preview && (

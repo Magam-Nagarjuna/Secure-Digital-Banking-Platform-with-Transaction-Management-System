@@ -8,25 +8,30 @@ public class LoanApplication {
 
     @Id
     private String applicationId;
+
     private String loanId;
     private Long customerId;
-    private Long accountNumber; 
+    private Long accountNumber;
     private Long savingsAccountNumber;
     private Long paymentAccountNumber;
+
     private Double loanAmount;
-    private Integer loanTenure;
+    private Double loanTenure;
     private Integer totalTenure;
+
     private Double interestRate;
     private Double emiPayable;
     private Double totalInterestPayable;
     private Double totalCost;
     private Double paidAmount;
     private Double outstandingAmount;
+
     private String applicationStatus;
     private String applicationDate;
     private String reviewedDate;
     private String rejectionReason;
     private Integer paidTenure;
+
     private String closedDate;
 
     public LoanApplication() {
@@ -88,11 +93,11 @@ public class LoanApplication {
         this.loanAmount = loanAmount;
     }
 
-    public Integer getLoanTenure() {
+    public Double getLoanTenure() {
         return loanTenure;
     }
 
-    public void setLoanTenure(Integer loanTenure) {
+    public void setLoanTenure(Double loanTenure) {
         this.loanTenure = loanTenure;
     }
 

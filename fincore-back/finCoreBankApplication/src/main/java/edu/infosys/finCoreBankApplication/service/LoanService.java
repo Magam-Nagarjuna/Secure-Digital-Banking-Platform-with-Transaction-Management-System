@@ -1,5 +1,5 @@
-package edu.infosys.finCoreBankApplication.service;
 
+package edu.infosys.finCoreBankApplication.service;
 
 import java.util.List;
 
@@ -16,8 +16,10 @@ public class LoanService {
 
     @Autowired
     private LoanDao loanDao;
+
     @Autowired
     private CustomerDao customerDao;
+
     @Autowired
     private BankUserService service;
 
@@ -25,85 +27,96 @@ public class LoanService {
     private static final long LOAN_ID_START = 100001L;
 
     public String generateLoanId() {
+
         String value = loanDao.getMaxLoanId();
+
         long nextId;
+
         if (value == null || value.isBlank()) {
+
             nextId = LOAN_ID_START;
+
         } else {
-            
+
             String digits = value.replaceAll("\\D", "");
-            long current = digits.isEmpty() ? LOAN_ID_START - 1 : Long.parseLong(digits);
+
+            long current = digits.isEmpty()
+                    ? LOAN_ID_START - 1
+                    : Long.parseLong(digits);
+
             nextId = current + 1;
         }
+
         return LOAN_ID_PREFIX + nextId;
     }
- 
- 	public List<Loan> getActiveLoans(){
 
- 		return loanDao.getLoansByStatus("A");
+    public List<Loan> getActiveLoans() {
 
- 	}
+        return loanDao.getLoansByStatus("A");
+    }
 
     public Loan calculateLoanDetails(Loan loan) {
-        Double amount = loan.getLoanAmount();
-       
-        
-        
-        if(amount < 100000) 
-            throw new RuntimeException("Minimum loan amount should be 100000");
-       
-        Integer months =  loan.getLoanTenure() * 12;
-        loan.setTotalTenure(months);
-        
-        Double monthlyRate = loan.getInterestRate()/(12*100);
-        
-        Double emi =(double) Math.round(
-        		 (amount *  monthlyRate * Math.pow(1 + monthlyRate, months))
-        				/
-        		(Math.pow(1 + monthlyRate, months)-1));
 
+        Double amount = loan.getLoanAmount();
+
+        if (amount == null || amount < 100000) {
+
+            throw new RuntimeException(
+                    "Minimum loan amount should be 100000");
+        }
+
+        
+
+        Double years = loan.getLoanTenure();
+
+        if (years == null || years <= 0) {
+
+            throw new RuntimeException(
+                    "Loan tenure should be greater than zero");
+        }
+
+       
+        Integer months = (int) Math.round(years * 12);
+
+        if (months <= 0) {
+
+            throw new RuntimeException(
+                    "Loan tenure must be at least 1 month");
+        }
+
+        loan.setTotalTenure(months);
+
+        Double interestRate = loan.getInterestRate();
+
+        if (interestRate == null || interestRate <= 0) {
+
+            throw new RuntimeException(
+                    "Interest rate should be greater than zero");
+        }
+
+        Double monthlyRate =
+                interestRate / (12 * 100);
+
+        Double factor =
+                Math.pow(1 + monthlyRate, months);
+
+        Double emi =
+                (amount * monthlyRate * factor)
+                        / (factor - 1);
+
+        emi = (double) Math.round(emi);
 
         loan.setEmiPayable(emi);
 
-       
-        Double totalCost =(double) Math.round( emi * months);
+        Double totalCost =
+                (double) Math.round(emi * months);
+
         loan.setTotalCost(totalCost);
-        
-        loan.setTotalInterestPayable(totalCost - amount);
-        return loan;
-    }
-}
-/*
-@Service
-public class LoanService {
 
-    @Autowired
-    private LoanDao loanDao;
-
-    public String generateLoanId() {
-
-        Long value = loanDao.getMaxLoanId();
-
-        if (value == null)
-            value = 1000001L;
-        else
-            value = value + 1;
-
-        String newId = "LI" + value;
-
-        return newId;
-    }
-
-    public Loan setLoan(Loan loan) {
-
-        int totalTenure = loan.getLoanTenure() * 12;
-
-        Double totalCost = loan.getTotalInterestPayable() + 100000.00;
-
-        loan.setTotalTenure(totalTenure);
-        loan.setTotalCost(totalCost);
+        loan.setTotalInterestPayable(
+                totalCost - amount);
 
         return loan;
     }
 }
-*/
+
