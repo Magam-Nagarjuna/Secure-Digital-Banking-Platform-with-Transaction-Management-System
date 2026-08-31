@@ -273,7 +273,7 @@ export const getAccountDetails = (accountId) => axios.get(`${API_BASE_URL}/accou
 
 The application uses a relational database with the following core entities:
 
-![FinCore Database Schema](./finalfin.png)
+![FinCore Database Schema](./datascheme.png)
 
 **Key Tables:**
 - **customer** - Customer information and profiles
