@@ -12,4 +12,6 @@ public interface LoanRepaymentDao {
     List<LoanRepayment> findByCustomerId(Long customerId);
 
     String getMaxRepaymentId();
+
+    void deleteById(String repaymentId);
 }

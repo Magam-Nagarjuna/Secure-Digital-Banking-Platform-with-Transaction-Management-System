@@ -45,4 +45,9 @@ public class LoanApplicationDaoImpl implements LoanApplicationDao {
     public String getMaxApplicationId() {
         return repository.getMaxApplicationId();
     }
+
+    @Override
+    public void deleteById(String applicationId) {
+        repository.deleteById(applicationId);
+    }
 }

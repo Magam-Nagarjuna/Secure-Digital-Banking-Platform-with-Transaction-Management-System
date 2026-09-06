@@ -181,7 +181,7 @@ const CustomerEntry = () => {
             {/* ================= MAIN ================= */}
             <main style={cs.entryMain}>
 
-                <div style={{ marginBottom: "22px" }}>
+                <div style={{ marginBottom: "22px", position: "relative", minHeight: "42px" }}>
                     <BackButton onClick={returnBack} />
                 </div>
 

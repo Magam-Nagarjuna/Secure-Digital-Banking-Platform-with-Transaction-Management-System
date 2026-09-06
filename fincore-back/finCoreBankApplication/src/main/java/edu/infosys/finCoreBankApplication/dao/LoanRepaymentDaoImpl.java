@@ -30,4 +30,9 @@ public class LoanRepaymentDaoImpl implements LoanRepaymentDao {
     public String getMaxRepaymentId() {
         return repository.getMaxRepaymentId();
     }
+
+    @Override
+    public void deleteById(String repaymentId) {
+        repository.deleteById(repaymentId);
+    }
 }

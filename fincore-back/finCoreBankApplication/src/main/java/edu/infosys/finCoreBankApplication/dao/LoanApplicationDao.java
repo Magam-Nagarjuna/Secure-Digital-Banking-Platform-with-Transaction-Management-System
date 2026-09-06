@@ -18,4 +18,6 @@ public interface LoanApplicationDao {
     List<LoanApplication> findByAccountNumber(Long accountNumber);
 
     String getMaxApplicationId();
+
+    void deleteById(String applicationId);
 }

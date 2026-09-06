@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getCustomers, getCustomerByUsername } from "../../Services/CustomerService";
+import { getCustomers, getCustomerByUsername, deleteCustomerById } from "../../Services/CustomerService";
 import Modal from "../common/Modal";
+import ConfirmDialog from "../common/ConfirmDialog";
 import PageHeader from "../common/PageHeader";
 import InfoCard from "../common/InfoCard";
 import DataTable from "../common/DataTable";
 import StatusBadge from "../common/StatusBadge";
+import ActionButtons from "../common/ActionButtons";
 import FormRow from "../common/FormRow";
 import FormField from "../common/FormField";
 import { customerStyles, tableStyles } from "../../styles";
@@ -14,7 +16,7 @@ import { CUSTOMER_STATUS } from "../../utils/constants";
 import { getRole } from "../../utils/storage";
 import "../../DisplayView.css";
 
-const COLUMNS = [
+const ADMIN_COLUMNS = [
     { key: "id", label: "ID" },
     { key: "customer", label: "CUSTOMER" },
     { key: "address", label: "ADDRESS" },
@@ -23,6 +25,7 @@ const COLUMNS = [
     { key: "username", label: "USERNAME" },
     { key: "joined", label: "JOINED" },
     { key: "status", label: "STATUS" },
+    { key: "actions", label: "ACTIONS" },
 ];
 
 function CustomerReport() {
@@ -38,6 +41,11 @@ function CustomerReport() {
         title: "",
         message: "",
         type: "info",
+    });
+
+    const [confirmDelete, setConfirmDelete] = useState({
+        open: false,
+        customer: null,
     });
 
     const navigate = useNavigate();
@@ -92,6 +100,41 @@ function CustomerReport() {
     const returnBack = () => {
         const role = localStorage.getItem("role");
         navigate(role === "Admin" ? "/admin-menu" : "/customer-menu");
+    };
+
+    const requestDeleteCustomer = (customer) => {
+        setConfirmDelete({ open: true, customer });
+    };
+
+    const cancelDeleteCustomer = () => {
+        setConfirmDelete({ open: false, customer: null });
+    };
+
+    const confirmDeleteCustomer = () => {
+        const customer = confirmDelete.customer;
+        if (!customer) return;
+
+        deleteCustomerById(customer.customerId)
+            .then(() => {
+                setConfirmDelete({ open: false, customer: null });
+                setModal({
+                    open: true,
+                    title: "Customer Deleted",
+                    message: `Customer "${customer.customerName}" and all of their linked accounts, transactions, and loan records have been permanently deleted.`,
+                    type: "info",
+                });
+                setCustomerData();
+            })
+            .catch((error) => {
+                console.error("Customer Delete Error:", error);
+                setConfirmDelete({ open: false, customer: null });
+                setModal({
+                    open: true,
+                    title: "Unable to Delete Customer",
+                    message: error.response?.data || "An error occurred while deleting the customer.",
+                    type: "error",
+                });
+            });
     };
 
     const totalCustomers = customers.length;
@@ -190,11 +233,12 @@ function CustomerReport() {
                 </div>
 
                 <DataTable
-                    columns={COLUMNS}
+                    columns={ADMIN_COLUMNS}
                     rows={customers}
+                    minWidth="1220px"
                     renderEmpty={() => (
                         <tr>
-                            <td colSpan={8} style={{ textAlign: "center", padding: "55px 20px", color: "#8290a5" }}>
+                            <td colSpan={9} style={{ textAlign: "center", padding: "55px 20px", color: "#8290a5" }}>
                                 <div style={{ fontSize: "28px", marginBottom: "10px" }}>👥</div>
                                 <div style={{ fontWeight: "700", color: "#52627a", marginBottom: "5px" }}>
                                     No customers found
@@ -238,13 +282,25 @@ function CustomerReport() {
                             </td>
                             <td>{customer.dateOfJoin || "—"}</td>
                             <td>{renderStatus(customer.status)}</td>
+                            <td>
+                                <ActionButtons
+                                    actions={[
+                                        {
+                                            key: "delete",
+                                            label: "🗑 Delete",
+                                            variant: "danger",
+                                            onClick: () => requestDeleteCustomer(customer),
+                                        },
+                                    ]}
+                                />
+                            </td>
                         </tr>
                     )}
                 />
 
                 <div style={customerStyles.tableFooter}>
                     <span style={customerStyles.tableFooterDot}>●</span>
-                    View-only access • Customer information is protected
+                    Admin access • You can delete customer records from here
                 </div>
 
             </div>
@@ -347,6 +403,21 @@ function CustomerReport() {
                 message={modal.message}
                 type={modal.type}
                 onClose={() => setModal({ ...modal, open: false })}
+            />
+
+            <ConfirmDialog
+                open={confirmDelete.open}
+                title="Delete Customer"
+                message={
+                    confirmDelete.customer
+                        ? `Are you sure you want to delete "${confirmDelete.customer.customerName}" (ID: ${confirmDelete.customer.customerId})? This will also permanently delete their accounts, transactions, and loan history. This action cannot be undone.`
+                        : ""
+                }
+                confirmLabel="Delete"
+                cancelLabel="Cancel"
+                type="error"
+                onConfirm={confirmDeleteCustomer}
+                onCancel={cancelDeleteCustomer}
             />
 
         </div>

@@ -3,6 +3,9 @@ package edu.infosys.finCoreBankApplication.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import edu.infosys.finCoreBankApplication.bean.Account;
@@ -42,8 +45,15 @@ public class CustomerController {
     }
 
     @DeleteMapping("/customer/{customerid}")
-    public void deleteCustomerById(@PathVariable("customerid") Long customerId) {
-        customerDao.deleteCustomerById(customerId);
+    public ResponseEntity<?> deleteCustomerById(@PathVariable("customerid") Long customerId) {
+        try {
+            service.deleteCustomerCascade(customerId);
+            return ResponseEntity.ok().build();
+        } catch (DataIntegrityViolationException ex) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                "Cannot delete this customer because related records still exist and could not be automatically removed."
+            );
+        }
     }
 
     @PutMapping("/customer")
